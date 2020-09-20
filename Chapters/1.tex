@@ -1,0 +1,146 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+    \chapter{Linear Spaces}
+    A useful construct in mathematics is the \textit{linear space}. 
+    Through this general notion, we can define sets abiding by certain general axioms without having to restrict ourselves to speaking about particular objects (except for the spaces themselves, of course).
+
+    \par So in general, we have the following definition:
+    \begin{definition}[Linear space]
+        A \textit{linear space} is a nonempty set $V$ with two operations (called \textit{addition} and \textit{multiplication}) associated with a scalar field\footnote{for the purposes of this class, the field will be $\mathbb{R}$, and so we will use $\mathbb{R}$ for the rest of the notes. However, the complex field $\cee$ can also work, and such a linear space is called a \textit{complex linear space}.}, abiding by the following conditions or axioms:
+        \begin{enumerate}
+            \item (Closure under addition) For any two elements $x,y \in V$, there is a unique element in $V$ corresponding to $x+y$, called the sum of $x$ and $y$.
+            \item (Closure under multiplication by real numbers) For every $x \in V$ and $a \in \mathbb{R}$ there will also be a unique element $ax \in V$ called the product of $a$ and $x$.
+            \item (Commutative law) For all $x, y \in V$, we have $x+y = y+x$.
+            \item (Associative law) For all $x, y, z \in V$, we have $(x+y)+z = x+(y+z)$.
+            \item (Existence of a zero element) There exists an element $O \in V$ such that for all $x \in V$, $x+O = x$.
+            \item (Existence of negatives) For all $x \in V$, the element $(-1)x$ exists such that $x + (-1)x = O$.
+            \item (Associative law) For every $x \in V$ and all $a, b \in \ree$, we have $a(bx) = (ab)x$.
+            \item (Distributive law for addition in $V$) For all $x, y \in V$ and all $a \in \ree$, we have $a(x+y) = ax+ay$.
+            \item (Distributive law for addition of numbers) For all $x \in V$ and $a, b \in \ree$, we have $(a+b)x = ax + bx$.
+            \item (Existence of identity) For all $x\in V$, we have $x = 1x$.
+        \end{enumerate}
+        We may also call a linear space a ``linear vector space'' or simply ``vector space''.
+    \end{definition}
+    Apostol calls axioms (1) and (2) \textit{closure axioms}, axioms (3)-(6) \textit{axioms for addition}, and axioms (7)-(10) \textit{axioms for multiplication by numbers}. 
+
+    \subsection{Examples}
+    \begin{enumerate}
+        \item lol i'm way too lazy for this
+    \end{enumerate}
+    \section{Consequences of the axioms}
+    \begin{theorem}[Zero uniqueness]
+        {In any linear space $V$, there is only one zero element.}    
+    \end{theorem}
+    \begin{theorem}[Uniqueness of negative elements]
+        {Every element $x$ in a linear space has a unique negative denoted $-x$.}
+    \end{theorem}
+    \begin{theorem}
+        For some linear space $V$, the following properties hold for all $x,y \in V$ and $a,b \in \ree$:
+        \begin{enumerate}
+            \item $0x = O$.
+            \item $aO = O$.
+            \item $(-a)x = -(ax) = a(-x)$.
+            \item If $ax = O$, then either $a = 0$ or $x = O$.
+            \item If $ax = ay$ and $a \neq 0$, then $x = y$.
+            \item If $ax = bx$ and $x \neq 0$, then $a = b$.
+            \item $-(x+y) = (-x) + (-y) = -x - y$.
+            \item $x + x = 2x, x + x + x = 3x$, and $\sum^n_{i=1} x = nx$. 
+        \end{enumerate}
+    \end{theorem}
+    
+    \begin{proof}[Proof of theorem 1]
+        We are guaranteed the existence of at least one zero element by the existence axiom, so let us suppose that we have 2 of them.
+        These will be denoted $O_1$ and $O_2$ respectively. 
+        We simply have $$O_1 + O_2 = O_2 + O_1 = O_1 = O_2.$$
+    \end{proof}
+    \begin{proof}[Proof of theorem 2]
+        For an element $x \in V$, suppose there are two negatives $y_1$ and $y_2$. 
+        Then we have
+        \begin{align*}
+            y_1 + x + y_2 &= (y_1 + x) + y_2 \\
+            &= y_1 + (x + y_2) \\
+            &= O + y_2 \\
+            &= y_1 + O \\
+            &\Rightarrow y_2 = y_1 
+        \end{align*}
+    \end{proof}
+    \begin{proof}[Proof of theorem 3]
+        We prove the theorem in a list:
+        \begin{enumerate}
+            \item \begin{align*}
+                0x &= (0+0)x \\
+                &= 0x + 0x \\
+                0x + -(0x) &= 0x + (0x + -(0x)) \\
+                O &= 0x + O \\
+                O &= 0x
+            \end{align*}
+            \item \begin{align*}
+                aO + aO &= a(O + O) \\
+                &= aO \\
+                aO + aO + (-aO) &= aO + (-aO) \\
+                aO &= O 
+            \end{align*}
+            \item \begin{align*}
+                (-a)x + ax &= (-a + a)x \\
+                &= 0x \\
+                &= O
+            \end{align*}
+            \item Suppose that $a=0$. Then by part (a), we have $ax = O$. If $a \neq 0$, then either $x = O$ or $x \neq O$. %lol, maybe we can assume that because we already know multiplicative properties of the reals, we can just fanangle a 'proof'
+            \item Since we have $ax = ay$, we have
+            \begin{align*}
+                ax &= ay \\
+                \frac1a(ax) &= \frac1a(ay) \\
+                \left(\frac1aa\right)x &= \left(\frac1aa\right)y 
+                x &= y
+            \end{align*}
+            \item asdfasdf 
+        \end{enumerate}
+    \end{proof}
+
+    \section*{Homework}
+    \begin{enumerate} % 3, 6, 11, 17, 20-24
+        \item Determine if the set of all vectors $(x,y,z)$ in $V_3$ whose components satisfy the condition $x+y+z = 0$ is a subspace of $V_3$. If it is, compute its dimension.
+        \item Determine if the set of all vectors $(x,y,z)$ in $V_3$ whose components satisfy the condition $x=y$ or $x=z$ is a subspace of $V_3$. If it is, compute its dimension.
+        \item Determine if the set $S$ of polynomials of degree $\leq n$ satisfying the condition $f(0)=0)$ is a subspace of $P_n$. If it is, compute its dimension.
+        \item Determine if the set $S$ of polynomials of degree $\leq n$ satisfying the condition $f$ is even is a subspace of $P_n$. If it is, compute its dimension.
+        \item Determine if the set $S$ of polynomials of degree $\leq n$ satisfying the condition $f$ has degree $k < n$ or $f = 0$ is a subspace of $P_n$. If it is, compute its dimension.
+        \item In the linaer space of all real polynomials $p(t)$, describe the subspace spanned by each of the following subsets of polynomials and determine the dimension of this subspace. 
+        \begin{enumerate}
+            \item $\{1,t^2,t^4\};$
+            \item $\{t,t^3,t^5\};$
+            \item $\{t,t^2\};$
+            \item $\{1+t,(1+t)^2\};$
+        \end{enumerate}
+        \item In this exercise, $L(S)$ denotes the subspacew spanned by a subset $S$ of a linaer space $V$. Prove each of the statements (a) through (f).
+        \begin{enumerate}
+            \item $S\subseteq L(S)$.
+            \item If $S \subseteq T \subseteq V$ and if $T$ is a subspace of $V$, then $L(S) \subseteq T$. This property is described by saying that $L(S)$ is the smallest subspace of $V$ which contain $S$.
+            \item A subset $S$ of $V$ is a subspace of $V$ if and only if $L(S) = S$.
+            \item If $S \subseteq T \subseteq V$, then $L(S) \subseteq L(T)$.
+            \item If $S$ and $T$ are subspaces of $V$, then so is $S \bigcap T$.
+            \item If $S$ and $T$ aer subsets of $V$, then $L(S \cap T) \subseteq L(S) \cap L(T)$.
+            \item Give an example in which $L(S \cap T) \neq L(S) \bigcap L(T)$.
+        \end{enumerate}
+        \item Let $V$ be the linear space consisting of all real-valued functions defined on the real line. Determine whether each of the following subsets of $V$ is dependent or independent. Compute the dimension of the subspace spanned by each set.
+        \begin{enumerate}
+            \item $\{1, e^{ax}, e^{bx}\}, a \neq b$
+            \item $\{e^{ax}, xe^{ax}\}$
+            \item $\{1, e^{ax}, xe^{ax}\}$
+            \item $\{e^{ax}, xe^{ax}, x^2e^{ax}\}$
+            \item $\{e^x, e^{-x}, \cosh x\}$
+            \item $\{\cos x, \sin x\}$
+            \item $\{\cos^2 x, \sin^2 x\}$
+            \item $\{1, \cos 2x, \sin^2 x\}$
+            \item $\{\sin x, \sin 2x\}$
+            \item $\{e^x\cos x, e^{-x}\sin x\}$
+        \end{enumerate}
+        \item Let $V$ be a finite-dimensional linear space, and let $S$ be a subspace of $V$. Prove each of the following statements.
+        \begin{enumerate}
+            \item $S$ is finite dimensional and $\dim S < \dim V$.
+            \item $\dim S = \dim V$ if and only if $S = V$.
+            \item Every basis for $S$ is part of a basis for $V$.
+            \item A basis for $V$ need not contain a basis for $S$.
+        \end{enumerate}
+    \end{enumerate}
+\end{document}

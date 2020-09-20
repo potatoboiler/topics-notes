@@ -1,0 +1,38 @@
+\documentclass{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2cm]{geometry}
+\usepackage{amsfonts, amsmath, amsthm, cite, subfiles, tablefootnote}
+
+\title{Notes for Advanced Topics in Mathematics, because the scheduling team doesn't like me}
+\author{Laurence Lu}
+\date{September 2020-June 2021}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\theoremstyle{remark}
+\newtheorem{problem}{Problem}
+\newtheorem{exercise}{Exercise}
+\newtheorem{example}{Example}
+\newtheorem{conjecture}{Conjecture}
+
+\newcommand{\ree}{\mathbb{R}}
+\newcommand{\cee}{\mathbb{C}}
+
+\begin{document}
+\maketitle
+
+\section*{Preface}
+\cite{apostol_1969}asdfasdasdfasdf
+:w
+f
+\subfile{Chapters/1.tex}
+
+\bibliography{mybib}{}
+\bibliographystyle{plain}
+\end{document}
