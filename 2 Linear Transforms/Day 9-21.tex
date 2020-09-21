@@ -1,0 +1,107 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{subcaption, enumerate}
+\usepackage{bbold}
+\usepackage{polynom}
+\usepackage{xfrac}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{enumitem}
+
+\usepackage{tikz}
+
+\newcommand{\dab}
+{
+	\begin{tikzpicture}[scale=0.04]
+		% head
+		\draw[thick] (0, 0) circle (3cm);
+
+		% bent arm
+		\draw[thick, rotate around={15 : (0, 0)}] (-3, 0) -- (-3.7, -2) -- (4.1, -1.1);
+
+		% extended arm
+		\draw[thick, rotate=20] (3, 0) -- (7, 2);
+	\end{tikzpicture}
+}
+\newcommand{\st}{\text{ s.t. }}
+
+\usepackage{fullpage}
+
+\title{Linear Transforms Day 2 \\ with Dr Nevard}
+\author{Notes by Laura Gallo}
+\date{September 21, 2020}
+
+\begin{document}
+
+\maketitle
+
+\section{Function Terminology}
+\subsection{Domain, Codomain, and Preimage}
+\emph{Define}: If $f: X\rightarrow Y$ is a function,
+\begin{itemize}[label=--]
+	\item The domain of $f$ is $X$
+	\item The codomain, or image space, of $f$ is $Y$
+	\item The range, or image, of $f$ is $f(X)=\{y:\exists x\in X \st y=f(x)\}$
+	\item If $V \subset Y$, the preimage of $f$ in $V$ is $f^{-1}(V)=\{x\in X:f(x)\in V\}$
+\end{itemize}
+
+\subsubsection{Exercises}
+\begin{enumerate}
+	\item Prove the preimage of a set preserves set operations; ie,
+		$$f^{-1}\left(\bigcup_\alpha V_\alpha\right)=\bigcup_\alpha f^{-1}(V_\alpha)$$
+		$$f^{-1}\left(\bigcap_\alpha V_\alpha\right)=\bigcap_\alpha f^{-1}(V_\alpha)$$
+		$$f^{-1}(V^c)=f^{-1}(V)^c$$
+
+	\item If $f(U)=\{y:\exists u\in U \st y=f(u)\}$, does $f$ preserve set operations too? Prove this or provide a counterexample.
+\end{enumerate}
+
+\subsection{Injective, Surjective, and Bijective}
+\emph{Define}: If $f: X\rightarrow Y$ is a function,
+\begin{itemize}[label=--]
+	\item $f$ is surjective/onto iff $\forall y \exists x \in X \st f(x)=y$
+	\item $f$ is injective/one to one iff $\forall x_1,x_2 \in X, f(x_1)=f(x_2) \Rightarrow x_1=x_2$
+	\item $f$ is bijective/one to one correspondance iff $f$ is surjective and injective \\
+		If $f$ is a bijection, we write $X \sim Y$ and say the cardinality of $X$ and $Y$ are equal \\
+		Example: $\aleph_0=|\mathbb{N}|=|\mathbb{Q}|<|\mathbb{R}|<|L^\infty |$
+\end{itemize}
+
+\subsection{Restrictions, Compositions, and Inverses}
+\emph{Define}:
+\begin{itemize}[label=--]
+	\item If $f: X\rightarrow Y$, $U\subset X$, then $g: U \rightarrow Y \st g(u)=f(u)$ is the restriction of $f$ ($\left.f\right|_U$)
+	\item If $g: X\rightarrow Y$, $f: Y\rightarrow Z$, then $f \circ g:X\rightarrow Z$ is a composition where $(f\circ g)(x)=f(g(x))$
+	\item If $f: X\rightarrow Y$, $g: Y\rightarrow X$ satisfies $(f\circ g)(y)=y\text{ } \forall y \in Y$, $g$ is the right inverse of $f$
+	\item If $f: X\rightarrow Y$, $g: Y\rightarrow X$ satisfies $(g\circ f)(x)=x\text{ } \forall x \in X$, $g$ is the left inverse of $f$
+\end{itemize}
+
+\subsection{Claim: If $f$ is onto, $f$ has a right inverse}
+\begin{proof}
+	Let $f:X\rightarrow Y$, $g:Y\rightarrow X$; we want to prove $f\circ g=I_Y$, where $I_Y:Y\rightarrow Y$ is the identity function. \\
+	Let $g(y) \in f^{-1}(\{y\}) \neq \emptyset$ \\
+	By the axiom of choice, you can always choose such a $g(y)$ \\
+	$\therefore f\circ g=I_Y$ \dab
+\end{proof}
+
+\subsection{Claim: $f$ has a left inverse iff $f$ is injective}
+\begin{proof}
+	Let $f:X\rightarrow Y$, $g: Y\rightarrow X$ \\
+	\textbf{Left to right:} \\
+	Suppose $g\circ f=I_Y$ and $f(x_1)=f(x_2)$ \\
+	$(g\circ f)(x_1)=(g\circ f)(x_2)$ \\
+	$x_1=x_2$ \dab \\
+\\
+	\textbf{Right to left:} \\
+	Suppose $f$ is injective \\
+	If $f^{-1}(\{y\})\neq \emptyset$, then $f^{-1}(\{y\})$ has exactly one element \\
+	Let $g(y)$ be the element of $f^{-1}(\{y\})$. \dab
+\end{proof}
+
+\subsection{Example of inverses}
+Let $F$, $D$ be functions such that:
+$$F: f \mapsto \int_0^x f(t)dt$$
+$$D: f\mapsto f'$$
+We have $D\circ F=I$, but $F \circ D \neq I$, so $F$ is a right inverse of $D$, and $D$ is a left inverse of $F$.
+
+\end{document}
