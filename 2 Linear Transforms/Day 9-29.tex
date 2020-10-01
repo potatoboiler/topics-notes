@@ -1,0 +1,203 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{subcaption, enumerate}
+\usepackage{bbold}
+\usepackage{polynom}
+\usepackage{xfrac}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{enumitem}
+
+\usepackage{tikz}
+
+\newcommand{\dab}
+{
+	\begin{tikzpicture}[scale=0.04]
+		% head
+		\draw[thick] (0, 0) circle (3cm);
+
+		% bent arm
+		\draw[thick, rotate around={15 : (0, 0)}] (-3, 0) -- (-3.7, -2) -- (4.1, -1.1);
+
+		% extended arm
+		\draw[thick, rotate=20] (3, 0) -- (7, 2);
+	\end{tikzpicture}
+}
+\newcommand{\st}{\text{ s.t. }}
+
+\usepackage{fullpage}
+
+\title{Linear Transforms Day 4 \\ with Dr Nevard}
+\author{Notes by Laura Gallo}
+\date{September 29, 2020}
+
+\begin{document}
+\maketitle
+
+\section{Example of Matrices of a Linear Transform}
+On $\mathbb{P}_4=\text{polynomials with degree $\leq$ 4}$, consider the linear transform $T: \mathbb{P}_4\rightarrow \mathbb{P}_4$, $Tf=(xf)'$. We can create the matrix of this transform by considering a given basis and applying the transform onto it. \\
+Choose basis $\{1, x, x^2, x^3, x^4\}$. \\
+\begin{equation*}
+\begin{split}
+	T1 & =(1x)' =1 \\
+	Tx & =(x^2)' =2x \\
+	Tx^2 & =(x^3)' =3x^2 \\
+	Tx^3 & =(x^4)' =4x^3 \\
+	Tx^4 & =(x^5)' =5x^4 \\
+\end{split}
+\end{equation*}
+\\
+We can then use this transformed basis to create a matrix:
+\begin{equation*}
+	\mathcal{M}(T, \{1, x, x^2, x^3, x^4\}, \{1, x, x^2, x^3, x^4\}) = \left(
+	\begin{matrix}
+		1 & 0 & 0 & 0 & 0 \\
+		0 & 2 & 0 & 0 & 0 \\
+		0 & 0 & 3 & 0 & 0 \\
+		0 & 0 & 0 & 4 & 0 \\
+		0 & 0 & 0 & 0 & 5 \\
+	\end{matrix}
+	\right)
+\end{equation*}
+\\
+Since matrix multiplication corresponds to applying its corresponding linear transform, we know that
+\begin{equation*}
+\begin{split}
+	T(2+3x^2+x^3+4x^4) &= (2x+3x^3+x^4+4x^5)' \\
+	&=2+9x^2+4x^3+20x^4
+\end{split}
+\end{equation*}
+\\
+is the same as the product:
+\begin{equation*}
+	\left(
+	\begin{matrix}
+		1 & 0 & 0 & 0 & 0 \\
+		0 & 2 & 0 & 0 & 0 \\
+		0 & 0 & 3 & 0 & 0 \\
+		0 & 0 & 0 & 4 & 0 \\
+		0 & 0 & 0 & 0 & 5 \\
+	\end{matrix}
+	\right)
+	\left(
+	\begin{matrix}
+		2 \\
+		0 \\
+		3 \\
+		1 \\
+		4 \\
+	\end{matrix}
+	\right) = \left(
+	\begin{matrix}
+		2 \\
+		0 \\
+		9 \\
+		4 \\
+		20 \\
+	\end{matrix}
+	\right)
+\end{equation*}
+\\
+In fact, the differential equation $Tf=\sum_{k=0}^np_n(x)\frac{d^n}{dx^n}f$ is linear for polynomial $p_n$, and as thus there is a corresponding matrix.
+
+\section{Diagonalisation}
+Suppose $T \in \mathcal{L}(V, W)$, basis $B=\{v_1,v_2,...,v_n\}\subset V$, $r(T)=m$. We can order the elements of $B$ such that $B_m=\{Tv_1,Tv_2,...,Tv_m\}$ are all linear independent. This makes $B_m$ a basis for the image of $T$. Thus, by the rank nullity theorem, the remaining basis vectors in $B$ must satisfy $Tv_k=0$. We thus end up with the following $m$ by $n$ matrix:
+\begin{equation*}
+\left(
+	\begin{matrix}
+		1 & 0 & 0 & \cdots & 0 & 0 & \cdots & 0 \\
+		0 & 1 & 0 & \cdots & 0 & 0 & \cdots &  0 \\
+		0 & 0 & 1 & \cdots & 0 & 0 & \cdots &  0 \\
+		& \vdots & & \ddots & & & \vdots \\
+		0 & 0 & 0 & \cdots & 1 & 0 & \cdots &  0 \\
+	\end{matrix}
+\right)
+\end{equation*}
+
+\section{Systems of Linear Equations}
+Consider the following system of linear equations:
+\begin{gather*}
+	a_{11}x_1+\dots+a_{1n}x_n=b_1 \\
+	a_{21}x_2+\dots+a_{2n}x_n=b_2 \\
+	\vdots \\
+	a_{m1}x_m+\dots+a_{mn}x_n=b_m
+\end{gather*}
+\\
+We can represent this system with the following matrix multiplication:
+\begin{equation*}
+	\left(
+		\begin{matrix}
+			a_{11} & a_{12} & \dots & a_{1n} \\
+			a_{21} & a_{22} & \dots & a_{2n} \\
+			\vdots & \vdots & \ddots & \vdots \\
+			a_{m1} & a_{m2} & \dots & a_{mn} \\
+		\end{matrix}
+	\right)
+	\left(
+		\begin{matrix}
+			x_1 \\
+			x_2 \\
+			\vdots \\
+			x_n
+		\end{matrix}
+	\right)
+	= \left(
+		\begin{matrix}
+			b_1 \\
+			b_2 \\
+			\vdots \\
+			b_m
+		\end{matrix}
+	\right)
+\end{equation*}
+\\
+Let $A$ be the matrix, $x$ be the variables vector, and $b$ be the constants vector such that the above is equivalent to $Ax=b$. Assuming all variables and constants are real, we know $A$ represents some linear transform $T\in \mathcal{L}(\mathbb{R}^n,\mathbb{R}^m)$. The system of linear equations has a solution if and only if $b\in \text{Im}(T)$. What comes below follows from the rank nullity theorem:
+\begin{description}
+	\item[Case 1:] $n=m$
+	\begin{enumerate}
+		\item $r(T)=n \Rightarrow$ bijection (every right hand side has a unique solution)
+		\item $r(T)<n \Rightarrow$ nontrivial null space; some right hand sides have no solution
+	\end{enumerate}
+	\item[Case 2:] $n>m$
+	\begin{enumerate}
+		\item $r(T)=m \Rightarrow$ every right hand side has nonunique solutions
+		\item $r(T)<m \Rightarrow$ nontrivial null space; some right hand sides have no solution
+	\end{enumerate} 
+	\item[Case 3:] $n<m$
+	\begin{enumerate}
+		\item $r(T)<m$ nontrivial null space; some right hand sides have no solution \\
+			injective $\Leftrightarrow r(T)=n$
+	\end{enumerate}
+\end{description}
+
+\section{Row Operations}
+On a matrix representing a system of linear equations, the following operations, called row operations, can be used to solve for the values of variables in a linear equation:
+\begin{enumerate}
+	\item Swapping rows (corresponds to changing the order of equations)
+	\item Multiplying a row by a constant (corresponds to multiplying an equation by a constant)
+	\item Subtracting a row by a multiple of a row (corresponds to subtracting equations)
+\end{enumerate}
+
+\section{Triangularisation}
+Given a matrix $A$ representing a system of linear equations, we can triangularise it to make it easier to solve the system by applying row operations to it:
+\begin{equation*}
+	\left(
+		\begin{matrix}
+			a_{11} & a_{12} & \dots & a_{1n} \\
+			a_{21} & a_{22} & \dots & a_{2n} \\
+			\vdots & \vdots & \ddots & \vdots \\
+			a_{m1} & a_{m2} & \dots & a_{mn}
+		\end{matrix}
+	\right) \Longrightarrow \left(
+		\begin{matrix}
+			a_{11} & a_{12} & \dots & a_{1n} \\
+			0 & a_{22} - \frac{a_{12}a_{21}}{a_{11}} & \dots & a_{2n} - \frac{a_{1n}a_{21}}{a_{11}} \\
+			\vdots & \vdots & \ddots & \vdots \\
+			0 & 0 & \dots & a_{mn} - \frac{a_{1n}a_{m1}}{a_{11}}
+		\end{matrix}
+	\right)
+\end{equation*}
+
+\end{document}
