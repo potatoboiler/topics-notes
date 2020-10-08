@@ -1,0 +1,247 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{subcaption, enumerate}
+\usepackage{bbold}
+\usepackage{polynom}
+\usepackage{xfrac}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{enumitem}
+
+\usepackage{tikz}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}[definition]
+\newcommand{\dab}
+{
+	\begin{tikzpicture}[scale=0.04]
+		% head
+		\draw[thick] (0, 0) circle (3cm);
+
+		% bent arm
+		\draw[thick, rotate around={15 : (0, 0)}] (-3, 0) -- (-3.7, -2) -- (4.1, -1.1);
+
+		% extended arm
+		\draw[thick, rotate=20] (3, 0) -- (7, 2);
+	\end{tikzpicture}
+}
+\newcommand{\st}{\text{ s.t. }}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\usepackage{fullpage}
+
+\title{Linear Transforms Day 5 \\ with Dr Nevard}
+\author{Notes by Laura Gallo}
+\date{October 1, 2020}
+
+\begin{document}
+\maketitle
+
+\section{Gaussian Elimination}
+Consider the following system of equations:
+\begin{align*}
+	x+2y-4z+2w&=5 \\
+	2x+y+3z-w&=6
+\end{align*}
+\\
+We can create an \emph{augmented matrix} for the above system and triangulise it:
+\begin{equation*}
+	\left(
+		\begin{matrix}[cccc|c]
+			1 & 2 & -4 & 2 & 5 \\
+			2 & 1 & 3 & -1 & 6
+		\end{matrix}
+	\right)
+\end{equation*}
+\begin{equation*}
+	\left(
+		\begin{matrix}[cccc|c]
+			1 & 2 & -4 & 2 & 5 \\
+			0 & -3 & 11 & -5 & -4
+		\end{matrix}
+	\right)
+\end{equation*}
+\begin{equation*}
+	\left(
+		\begin{matrix}[cccc|c]
+			1 & 2 & -4 & 2 & 5 \\
+			0 & 1 & -\frac{11}{3} & \frac{5}{3} & \frac{4}{3}
+		\end{matrix}
+	\right)
+\end{equation*}
+\begin{equation*}
+	\left(
+		\begin{matrix}[cccc|c]
+			1 & 0 & \frac{10}{3} & \frac{4}{3} & \frac{7}{3} \\[1mm]
+			0 & 1 & -\frac{11}{3} & \frac{5}{3} & \frac{4}{3}
+		\end{matrix}
+	\right)
+\end{equation*}
+\\
+From this we can get the following:
+\begin{align*}
+	x&=\frac{7}{3}-\frac{10}{3}z+\frac{4}{3}w \\
+	y&=-\frac{4}{3}+\frac{11}{3}z-\frac{5}{3}w
+\end{align*}
+\\
+This process of solving for $x$ and $y$ using row operations is called Gaussian elimination. Alternatively, we can write the solution set as follows:
+\begin{equation*}
+	\left(
+		\begin{matrix}
+			x \\
+			y
+		\end{matrix}
+	\right) = \left(
+		\begin{matrix}
+			\frac{7}{3} \\
+			-\frac{4}{3}
+		\end{matrix}
+	\right) + \left(
+		\begin{matrix}
+			-10 \\
+			11
+		\end{matrix}
+	\right)z + \left(
+		\begin{matrix}
+			4 \\
+			-5
+		\end{matrix}
+	\right)w
+\end{equation*}
+\\
+Recall that \begin{math}
+	\left\{\left(
+		\begin{matrix}
+			-10 \\
+			11
+		\end{matrix}
+	\right),
+	\left(
+		\begin{matrix}
+			4 \\
+			-5
+		\end{matrix}
+	\right)\right\}
+\end{math} must span the null space of the linear transform represented by this matrix.
+
+\section{Row Operations as Matrix Multiplication}
+Every row operation can be represented as a left matrix multiplication.
+
+\subsection{Swapping rows}
+Swapping rows is represented by a special matrix called a \emph{permutation matrix}.
+
+\begin{definition}
+	A \emph{permutation matrix} is a matrix that has a 1 in each row and column and a total of $n$ nonzero elements.
+\end{definition}
+
+\begin{example}
+	\begin{math}
+		\left(
+			\begin{matrix}
+				0 & 1 \\
+				1 & 0
+			\end{matrix}
+		\right)
+	\end{math} is a permutation matrix, and is applied as:
+	\begin{equation*}
+		\left(
+			\begin{matrix}
+				0 & 1 \\
+				1 & 0
+			\end{matrix}
+		\right) \left(
+			\begin{matrix}
+				a & b \\
+				c & d
+			\end{matrix}
+		\right) = \left(
+			\begin{matrix}
+				c & d \\
+				a & b
+			\end{matrix}
+		\right)
+	\end{equation*}
+\end{example}
+
+\subsection{Subtracting a Multiple of a Row}
+Subtracting a multiple of a row is represented by an identity matrix with one of its columns filled with nonzero numbers below the 1. This is an example of a \emph{lower triangular matrix}. An example is shown below:
+
+\begin{equation*}
+	\left(
+		\begin{matrix}
+			1 & 0 & 0 \\
+			-x & 1 & 0 \\
+			-y & 0 & 1
+		\end{matrix}
+	\right) \left(
+		\begin{matrix}
+			a & b & c \\
+			d & e & f \\
+			g & h & i
+		\end{matrix}
+	\right) = \left(
+		\begin{matrix}
+			a & b & c \\
+			d-ax & e-bx & f-cx \\
+			g-ay & h-by & i-cy
+		\end{matrix}
+	\right)
+\end{equation*}
+
+\subsection{Generalisation}
+It can be shown that the following holds for any matrix $A$ with some permutation matrix $P$:
+\begin{equation*}
+	\left(
+		\begin{matrix}
+			1 & 0 & 0 & \dots & 0 & 0 \\
+			\ell_{11} & 1 & 0 & \dots & 0 & 0 \\
+			\ell_{21} & 0 & 1 & \dots & 0 & 0 \\
+			\vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+			\ell_{(m-1)1} & 0 & 0 & \dots & 1 & 0 \\
+			\ell_{m1} & 0 & 0 & \dots & 0 & 1 \\
+		\end{matrix}
+	\right)
+	\left(
+		\begin{matrix}
+			1 & 0 & 0 & \dots & 0 & 0 \\
+			0 & 1 & 0 & \dots & 0 & 0 \\
+			0 & \ell_{12} & 1 & \dots & 0 & 0 \\
+			\vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+			0 & \ell_{(m-2)2} & 0 & \dots & 1 & 0 \\
+			0 & \ell_{(m-1)2} & 0 & \dots & 0 & 1 \\
+		\end{matrix}
+	\right)
+\end{equation*}
+\begin{equation*}
+	\left(
+		\begin{matrix}
+			1 & 0 & 0 & \dots & 0 & 0 \\
+			0 & 1 & 0 & \dots & 0 & 0 \\
+			0 & 0 & 1 & \dots & 0 & 0 \\
+			\vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+			0 & 0 & \ell_{(m-3)3} & \dots & 1 & 0 \\
+			0 & 0 & \ell_{(m-2)3} & \dots & 0 & 1 \\
+		\end{matrix}
+	\right) \cdots
+	\left(
+		\begin{matrix}
+			1 & 0 & 0 & \dots & 0 & 0 \\
+			0 & 1 & 0 & \dots & 0 & 0 \\
+			0 & 0 & 1 & \dots & 0 & 0 \\
+			\vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+			0 & 0 & \ell_{(m-3)3} & \dots & 1 & 0 \\
+			0 & 0 & \ell_{(m-2)3} & \dots & 0 & 1 \\
+		\end{matrix}
+	\right)PA=\text{an upper triangular matrix}
+\end{equation*}
+
+\end{document}

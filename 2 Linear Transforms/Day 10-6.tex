@@ -1,0 +1,104 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{subcaption, enumerate}
+\usepackage{bbold}
+\usepackage{polynom}
+\usepackage{xfrac}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{enumitem}
+
+\usepackage{tikz}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}[definition]
+\newcommand{\dab}
+{
+	\begin{tikzpicture}[scale=0.04]
+		% head
+		\draw[thick] (0, 0) circle (3cm);
+
+		% bent arm
+		\draw[thick, rotate around={15 : (0, 0)}] (-3, 0) -- (-3.7, -2) -- (4.1, -1.1);
+
+		% extended arm
+		\draw[thick, rotate=20] (3, 0) -- (7, 2);
+	\end{tikzpicture}
+}
+\newcommand{\st}{\text{ s.t. }}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\usepackage{fullpage}
+
+\title{Linear Transforms Day 7 \\ with Dr Nevard}
+\author{Notes by Laura Gallo}
+\date{October 6, 2020}
+
+\begin{document}
+\maketitle
+
+\section{Finding Inverses of Matricese}
+We can use Gaussian elimination to find inverses of matrices. For example:
+\begin{equation*}
+	\left(
+		\begin{matrix}[cc|cc]
+			1 & 2 & 1 & 0 \\
+			3 & 4 & 0 & 1
+		\end{matrix}
+	\right)
+\end{equation*}
+\begin{equation*}
+	\left(
+		\begin{matrix}[cc|cc]
+			1 & 2 & 1 & 0 \\
+			0 & -2 & -3 & 1
+		\end{matrix}
+	\right)
+\end{equation*}
+\begin{equation*}
+	\left(
+		\begin{matrix}[cc|cc]
+			1 & 0 & -2 & 1 \\
+			0 & -2 & -3 & 1
+		\end{matrix}
+	\right)
+\end{equation*}
+\begin{equation*}
+	\left(
+		\begin{matrix}[cc|cc]
+			1 & 0 & -2 & 1 \\
+			0 & 1 & -\frac{3}{2} & \frac{1}{2}
+		\end{matrix}
+	\right)
+\end{equation*}
+The right side of the augmented matrix is the inverse of the original matrix; ie,
+\begin{equation*}
+	\left(
+		\begin{matrix}
+			1 & 2 \\
+			3 & 4
+		\end{matrix}
+	\right)
+	\left(
+		\begin{matrix}
+			-2 & 1 \\
+			-\frac{3}{2} & \frac{1}{2}
+		\end{matrix}
+	\right) = \left(
+		\begin{matrix}
+			1 & 0 \\
+			0 & 1
+		\end{matrix}
+	\right)
+\end{equation*}
+Note that this is an inefficient way to solve systems of equations.
+\end{document}

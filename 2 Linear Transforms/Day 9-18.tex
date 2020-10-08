@@ -1,0 +1,116 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{subcaption, enumerate}
+\usepackage{bbold}
+\usepackage{polynom}
+\usepackage{xfrac}
+\usepackage{graphicx}
+\usepackage{mathtools}
+
+\usepackage{tikz}
+
+\newcommand{\dab}
+{
+	\begin{tikzpicture}[scale=0.04]
+		% head
+		\draw[thick] (0, 0) circle (3cm);
+
+		% bent arm
+		\draw[thick, rotate around={15 : (0, 0)}] (-3, 0) -- (-3.7, -2) -- (4.1, -1.1);
+
+		% extended arm
+		\draw[thick, rotate=20] (3, 0) -- (7, 2);
+	\end{tikzpicture}
+}
+
+\usepackage{fullpage}
+
+\title{Linear Transforms Day 1 \\ with Dr Nevard}
+\author{Notes by Laura Gallo}
+\date{September 18, 2020}
+
+\begin{document}
+
+\maketitle
+\section{Linear Transform}
+\emph{Define}: If $V$, $W$ are vector spaces, then $T: V\rightarrow W$ is a linear transform if $\forall v, w \in V, a, b \in \mathbb{F}, T(av+bw)=aTv+bTw$
+\subsection{Examples}
+\begin{enumerate}
+	\item Trivial transform: $\forall v \in V, Tv=0$
+
+	\item Let $T: \mathbb{R} \rightarrow \mathbb{R}$ with $T(1)=k$ \\
+		$Tx=T(1x)=xT(1)=kx$ \\
+		So every linear transform on $\mathbb{R}$ is of the form $Tx=kx$.
+
+	\item Let $T: \mathbb{R}^n \rightarrow \mathbb{R}$ \\
+		Let $e$ be the orthonormal basis $\{(1,0,...,0),(0,1,...,0),...,(0,0,...,1)\}$ \\
+		$$T(x_1,x_2,...,x_n)=T(\sum_{k=1}^n x_ke_k)=\sum_{k=1}^nx_kTe_k$$
+		So every linear transform $T:\mathbb{R}^n \rightarrow \mathbb{R}$ is of the form $Tx=x \cdot c =\sum_{k=1}^nx_kc_k$.
+
+	\item Projections
+	\begin{enumerate}
+		\item $(x_1, x_2, x_3) \xmapsto{T} (x_1, 0, x_3)$
+		\item For any inner product space $U \subset V$, $Tv=\text{Proj}_U(v)$ is a linear transform.
+	\end{enumerate}
+
+	\item In $C[0,1]$:
+	\begin{enumerate}
+		\item $f \xmapsto{T} \int_0^1 f(t)dt$
+		\item $f \xmapsto{T} \int_0^1 g(t)f(t)dt$ for any fixed $g(t)$.
+	\end{enumerate}
+\end{enumerate}
+
+\section{Range and Null Spaces}
+\emph{Define}:
+\begin{itemize}
+	\item[--] Range: $R(T)=\{w \in W : \exists v \in V \text{ s.t. } Tv=w\}$
+	\item[--] Null space: $N(T)=\{v \in V : Tv=0\}$
+\end{itemize}
+
+\subsection{Example}
+For an inner product space $V$, $U \subset V$, take $T=\text{Proj}_U$. We have $N(T)=U^\perp$.
+
+\subsection{Proposition: If $T: V \rightarrow W$ is linear, then $R(T)$ and $N(T)$ are subspaces of $W$ and $V$ respectively.}
+\begin{proof}
+	This proof is trivial due to the linearity of $T$. \dab
+\end{proof}
+
+\subsection{Rank and Nullity}
+\emph{Define}:
+\begin{itemize}
+	\item[--] Rank: $r(T)=\text{dim } R(T)$
+	\item[--] Nullity: $n(T)=\text{dim } N(T)$
+\end{itemize}
+
+\subsubsection{Rank - Nullity Theorem: If $T: V \rightarrow W$ linear and $V$ finite dimensional, then $r(T)+n(T)=\text{dim } V$}
+\begin{proof}
+	Let $n=\text{dim } V$, $m=\text{dim } N(T)$ \\
+	Let $\{v_1,v_2,...,v_m\}$ be a basis for $N(T)$ \\
+	We can extend $\{v_1, v_2, ..., v_m\}$ into a basis $\{v_1, v_2, ..., v_n\}$ for $V$ \\
+	Let $w_k=Tv_k$, $B=\{w_{m+1}, ..., w_n\}$ \\
+	We want to prove $B$ is a basis for $R(T)$
+
+	\begin{enumerate}
+		\item $B$ is linearly independant. \\
+		Assume $B$ is linearly dependant
+		$$c_{m+1}w_{m+1}+...+c_nw_n=0$$
+		$$c_{m+1}Tv_{m+1}+...+c_nTv_n=0$$
+		$$T(c_{m+1}v_{m+1}+...+c_nv_n)=0$$
+		$$\therefore c_{m+1}v_{m+1}+...+c_nv_n \in N(T)$$
+		$$\exists a_k \text{ s.t. } a_1v_1+...+a_mv_m-c_{m+1}v_{m+1}-...-c_nv_n=0$$
+		This is a big oopsie since $\{v_n\}$ is a basis and is thus linearly independant. \\
+		$\therefore$ $B$ is linearly independant
+		\item $L(B)=R(T)$ \\
+		Let $w \in R(T)$ \\
+		$$\exists v \in V \text{ s.t. } w=TV$$
+		Since $v \in V$, $\exists b_k \text{ s.t. } v=b_1v_1+...+b_nv_n$
+		$$w=T(b_1v_1+...+b_nv_n)=b_{m+1}w_{m+1}+...+b_nw_n$$
+		$$\therefore w \in L(B)$$
+		$\therefore R(T) = L(B)$
+	\end{enumerate}
+	$\therefore r(T)+n(T)=\text{dim } V$. \dab
+\end{proof}
+
+\end{document}

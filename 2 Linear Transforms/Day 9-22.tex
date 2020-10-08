@@ -1,0 +1,120 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{subcaption, enumerate}
+\usepackage{bbold}
+\usepackage{polynom}
+\usepackage{xfrac}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{enumitem}
+
+\usepackage{tikz}
+
+\newcommand{\dab}
+{
+	\begin{tikzpicture}[scale=0.04]
+		% head
+		\draw[thick] (0, 0) circle (3cm);
+
+		% bent arm
+		\draw[thick, rotate around={15 : (0, 0)}] (-3, 0) -- (-3.7, -2) -- (4.1, -1.1);
+
+		% extended arm
+		\draw[thick, rotate=20] (3, 0) -- (7, 2);
+	\end{tikzpicture}
+}
+\newcommand{\st}{\text{ s.t. }}
+
+\usepackage{fullpage}
+
+\title{Linear Transforms Day 3 \\ with Dr Nevard}
+\author{Notes by Laura Gallo}
+\date{September 22, 2020}
+
+\begin{document}
+\maketitle
+
+\section{Proposition: If $T:V\rightarrow W$ is linear and bijective, $T^{-1}$ is linear.}
+\begin{proof}
+	Let $T:V\rightarrow W$, $v,w\in V$
+	$$TT^{-1}(av+bw)=av+bw$$
+	$$T(aT^{-1}v+bT^{-1}w)=aTT^{-1}v+bTT^{-1}w=av+bw$$
+	By transitivity, $TT^{-1}(av+bw)=T(aT^{-1}v+bT^{-1}w)$ \\
+	$\therefore T^{-1}(av+bw)=aT^{-1}v+bT^{-1}w$ \dab
+\end{proof}
+
+\section{$\mathcal{L}(V,W)$}
+If $V,W$ are vector spaces, then we define $\mathcal{L}(V,W)=\{\text{all linear transforms } T:V\rightarrow W\}$.
+
+\subsection{Examples}
+\begin{itemize}[label=--]
+	\item If $V$ is a vector space over the scalar field $\mathbb{F}$ (which is also a vector space), then $\mathcal{L}(V,\mathbb{F})$ is called the space of functionals.
+	\item $\mathcal{L}(V)=\mathcal{L}(V,V)$ is an algebra because for all $S,T,R\in \mathcal{L}(V)$:
+		\begin{itemize}[label=--]
+			\item $cS$, $S+T$, and $ST$ are all defined and closed in $\mathcal{L}(V)$
+			\item $R(ST)=(RS)T$
+			\item $R(S+T)=RS+RT$, $(S+T)R=SR+TR$ (in general $ST\neq TS$)
+		\end{itemize}
+\end{itemize}
+
+\section{Powers of Linear Transforms}
+In $\mathcal{L}(V)$, $T^0=I$, $T^n=TT^{n-1}$. \\
+With this, we can have:
+\begin{itemize}[label=--]
+	\item Polynomials of $T$: $\sum_{k=0}^n a_kT^k$
+	\item Power series of $T$: $\sum_{n=0}^\infty a_nT^n$ (must be tested for convergence)
+	\item Exponents: $e^T=\sum_{n=0}^\infty \frac{T^n}{n!}$ (always converges)
+\end{itemize}
+
+\section{Properties of Injective Linear Transforms}
+If and only if $T:V\rightarrow W$ is an injective linear transform, the following hold:
+\begin{itemize}[label=--]
+	\item The nullity of $T$ is 0
+		\begin{proof}
+			Left to right follows trivially from injectivity. \\
+			For right to left, suppose only $T(0)=0$
+			$$Tv_1=Tv_2$$
+			$$T(v_1-v_2)=0$$
+			$$v_1-v_2=0$$
+			$$v_1=v_2$$
+			$\therefore T$ is injective. \dab
+		\end{proof}
+	\item $T$ preserves linear independence
+		\begin{proof}
+			Let $\{v_n\}\subset V$ be a linearly independent set.
+			$$c_1Tv_1+c_2Tv_2+...+c_nTv_n=0$$
+			$$T(c_1v_1+c_2v_2+...+c_nv_n)=0$$
+			$$c_1v_1+c_2v_2+...+c_nv_n=0$$
+			Because ${v_n}$ is linearly independent, $c_k=0$. \\
+			$\therefore \{Tv_n\}$ is linearly independent. \dab
+		\end{proof}
+	\item $\text{dim } V=\text{dim }T(V)$ \\
+		This follows from the above and the Big Ugly Lemma.
+\end{itemize}
+
+\section{Representing Linear Transforms}
+For $T\in \mathcal{L}(V,W)$, if $\{v_1,v_2,...,v_n\}\subset V$ a basis, $Tv_k=w_k$, then $\exists!c_k\st v=c_1v_1+c_2v_2+...+c_nv_n$.
+In general, given two bases $\{v_n\}\subset V,\{w_m\}\subset W$, we can describe the linear transform $T:V\rightarrow W$ in the following way:
+
+$$Tv_1=a_{11}w_1+a{21}w_2+...+a_{m1}w_m$$
+$$Tv_2=a_{12}w_1+a{22}w_2+...+a_{m2}w_m$$
+$$\vdots$$
+$$Tv_n=a_{1n}w_1+a{2n}w_2+...+a_{mn}w_m$$
+
+We define the matrix of $T$ with respect to the bases $\{v_n\}$ and $\{w_m\}$ in the following way:
+\begin{displaymath}
+	\mathcal{M}(\{v_n\},\{w_m\}) = \left(\begin{matrix}
+		a_{11} & a_{12} & \cdots & a_{1n} \\
+		a_{21} & a_{22} & \cdots & a_{2n} \\
+		\vdots & \vdots & \ddots & \vdots \\
+		a_{m1} & a_{m2} & \cdots & a_{mn} \\
+	\end{matrix}\right)
+\end{displaymath}
+
+To apply this transformation onto $v=c_1v_1+c_2v_2+...+c_nv_n$, we do the following:
+$$Tv=T(c_1v_1+c_2v_2+...+c_nv_n)=cTv_1+cTv_2+...+cTv_n=\sum_{k=1}^nc_kTv_k$$
+$$=\sum_{k=1}^nc_k\sum_{j=1}^ma_{jk}w_k=\sum_{j=1}^mw_k\sum_{k=1}^nc_ka_{jk}$$
+
+\end{document}
