@@ -1,0 +1,327 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{subcaption, enumerate}
+\usepackage{bbold}
+\usepackage{polynom}
+\usepackage{xfrac}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{enumitem}
+
+\usepackage{tikz}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corot}{Corollary}[theorem]
+\newtheorem{lemma}{Lemma}
+\newtheorem{corol}{Corollary}[lemma]
+\newtheorem{proposition}{Proposition}
+\newtheorem{corop}{Corollary}[proposition]
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}[definition]
+\newtheorem*{notation}{Notation}
+
+\newcommand{\dab}
+{
+	\begin{tikzpicture}[scale=0.04]
+		% head
+		\draw[thick] (0, 0) circle (3cm);
+
+		% bent arm
+		\draw[thick, rotate around={15 : (0, 0)}] (-3, 0) -- (-3.7, -2) -- (4.1, -1.1);
+
+		% extended arm
+		\draw[thick, rotate=20] (3, 0) -- (7, 2);
+	\end{tikzpicture}
+}
+\newcommand{\st}{\text{ s.t. }}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\usepackage{fullpage}
+
+\title{Determinants Day 1 and 2 \\ with Dr Nevard}
+\author{Notes by Laura Gallo}
+\date{October 9, 2020}
+
+\begin{document}
+\maketitle
+
+\section{Definitions for functions}
+Let \begin{math}
+	f:V^n\rightarrow \begin{cases}
+		\mathbb{R} \\
+		\mathbb{C}
+	\end{cases}
+\end{math}.
+\begin{definition}
+	$f$ is \emph{multilinear} if:
+	\begin{enumerate}
+		\item $f(v_1, v_2, \dots, cv_k, \dots, v_n)=cf(v_1, v_2, \dots, v_k, \dots, v_n)$
+		\item $f(v_1, v_2, \dots, v_k+u_k, \dots, v_n)=f(v_1, v_2, \dots, v_k, \dots, v_n)+f(v_1, v_2, \dots, u_k, \dots, v_n)$
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}
+	$f$ is \emph{alternating} if $f(v_1, v_2, \dots, v_i, \dots, v_j, \dots, v_n) = -f(v_1, v_2, \dots, v_j, \dots, v_i, \dots, v_n)$; ie, swapping any two arguments makes the result negative.
+\end{definition}
+
+\begin{definition}
+	$f$ is \emph{symmetric} if $f(v_1, v_2, \dots, v_i, \dots, v_j, \dots, v_n) = f(v_1, v_2, \dots, v_j, \dots, v_i, \dots, v_n)$; ie, swapping any two arguments does not change the result.
+\end{definition}
+
+\begin{lemma}
+	If $f$ is symmetric, $f(v_1, v_2, \dots, v_n) = f(v_{\pi_1}, v_{\pi_2},\dots, v_{\pi_n})$, where $\pi$ is a permutation of $(1,2,\dots,n)$.
+	\begin{proof}
+		This can be shown easily by induction. \dab
+	\end{proof}
+\end{lemma}
+
+\begin{definition}
+	$f$ is \emph{normalised} for a given basis $\{e_1,e_2,\dots,e_n\}$ if $f(e_1,e_2,\dots,e_n)=1$.
+\end{definition}
+
+\section{Uniqueness of the Determinant}
+\begin{theorem}
+	If $f:\mathbb{C}^{n^2}\rightarrow\mathbb{C}$ is multilinear, alternating, and normalised, then $f$ is unique. This function $f$ is called the determinant.
+\end{theorem}
+
+\section{Parity of Permutations}
+\begin{definition}
+	A permutation $\sigma$ is \emph{even} or \emph{odd} depending on whether it can be obtained from the identity permutation with an even or odd number of steps.
+\end{definition}
+
+\begin{proposition}
+	The above definition is well defined
+	\begin{proof}
+		I have no idea what I'm doing dsjbfn \\
+		In a sequence $(a_1,a_2,\dots,a_n)$ (permutation of $(1,2,\dots,n)$), an inversion occurs if for some $i<j$, $a_i>a_j$. \\
+		Let $I(a_1,a_2,\dots,a_n)$ be the number of inversions. \\
+		We claim $I(a_1,a_2,\dots,a_n)$ has the same parity as the number of swaps it takes to sort $(a_1,a_2,\dots,a_n)$. \\
+		Take the subsequence $(a_i,a_{i+1},\dots,a_j)\Longrightarrow (a_i,a_{i+1},\dots,a_j)$ (one inversion) \\
+		$a_i$ swapped with $a_j$ changes the number of inversions by $\pm 1$. \\
+		$a_k<\min\{a_i,a_j\}$ means 0 inversions \\
+		$a_k>\max\{a_i,a_j\}$ means 0 inversions \\
+		$\min\{a_i, a_j\}<a_k<\max\{a_i,a_j\}$ means $\pm 2$ inversions \\
+		since the swap changes the number of inversions by an odd number, each swap changes the parity of the number of inversions. Hence, the parity of number of swaps until it is sorted is equal to the parity of the number of inversions. \dab
+	\end{proof}
+\end{proposition}
+
+\begin{notation}
+	If $\sigma$ is a permutation, then \begin{math}
+		(-1)^\sigma=\begin{cases}
+			1 & \text{if $\sigma$ is even} \\
+			-1 & \text{if $\sigma$ is odd}
+		\end{cases}
+	\end{math}
+\end{notation}
+\begin{proposition}
+	If $f$ is alternating, $f(a_{\pi_1}, a_{\pi_2},\dots,a_{\pi_n})=(-1)^\pi f(a_1,a_2,\dots,a_n)$.
+\end{proposition}
+\begin{corop}
+	If $a_i=a_j$, $f(a_1,a_2,\dots,a_n)=0$.
+\end{corop}
+
+\section{Properties of the Determinant}
+Let $v_1,v_2,\dots,v_n$ be the rows of an n by n matrix, and assume $f$ is alternating, multilinear, and normalised.
+\begin{lemma}
+	$f(v_1,v_2,\dots,v_n) = f(v_1+cv_k,v_2,...,v_n)$
+	\begin{proof}
+		$f(v_1+cv_k,v_2,...,v_n)=f(v_1,v_2,\dots,v_n)+cf(v_k,v_2,\dots,v_n)=f(v_1,v_2,\dots,v_n)+0=f(v_1,v_2,\dots,v_n)$ \dab
+	\end{proof}
+\end{lemma}
+
+\begin{proposition}
+	If $\{v_1,v_2,\dots,v_n\}$ is linearly dependant, then $f(v_1,v_2,\dots,v_n)=0$.
+	\begin{proof}
+		Without loss of generalisation, assume $v_1=c_2v_2+c_3v_3+\dots+c_nv_n$. \\
+		If $v_k=0$, then by multilinearity $f(v_1,v_2,\dots,v_n)=0$. \\
+		Assume $v_k\neq 0 \forall v_k\in \{v_2,v_3,\dots,v_n\}$ \\
+		$$f(v_1+c_2v_2+\dots+c_nv_n,v_2,\dots,v_n)=f(v_1,v_2,\dots,v_n)+\sum_{k=0}^nc_kf(v_k,v_2,\dots,v_n)$$
+		$$f(v_1,v_2,\dots,v_n)+f(c_2v_2+\dots+c_nv_n,v_2,\dots,v_n)=f(v_1,v_2,\dots,v_n)$$
+		$$2f(v_1,v_2,\dots,v_n)=f(v_1,v_2,\dots,v_n)$$
+		$$f(v_1,v_2,\dots,v_n)=0$$
+		\dab
+	\end{proof}
+\end{proposition}
+
+\begin{proposition}
+	If $v_1,v_2,\dots,v_n$ are the rows of an upper triangular matrix, then $f(v_1,v_2,\dots,v_n)=\prod_{i=1}^nv_{ii}$.
+	\begin{proof} Split the proof into two different cases:
+		\begin{description}
+			\item[Case 1:] $v_{jj}=0$ for some $j$ \\
+				\begin{equation*}
+					\left(
+						\begin{matrix}
+							v_{11} \\
+							0 & v_{22} \\
+							0 & 0 & v_{33} & & & \text{stuff}\\
+							0 & 0 & 0 & \ddots \\
+							0 & 0 & 0 & \dotsc & v_{(j-1)(j-1)} \\
+							0 & 0 & 0 & \dotsc & 0 & 0 \\
+							0 & 0 & 0 & \dotsc & 0 & 0 & v_{(j+1)(j+1)} \\
+							\vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \ddots
+						\end{matrix}
+					\right)
+				\end{equation*}
+				The $j$th row is spanned by the last $n-j$ rows; hence, $f(v_1,v_2,\dots,v_n)=0=\prod_{i=1}^nv_{ii}$.
+			\item[Case 2:] $v_{jj}\neq 0$ for all $j$
+				\begin{equation*}
+					\left|
+						\begin{matrix}
+							v_{11} & v_{12} & \cdots & v_{1n} \\
+							0 & v_{12} & \cdots & v_{2n} \\
+							\vdots & \vdots & \ddots & \vdots \\
+							0 & 0 & \cdots & v_{nn}
+						\end{matrix}
+					\right| = (\prod_{i=1}^nv_{ii}) \left|
+						\begin{matrix}
+							1 & v'_{12} & \cdots & v'_{1n} \\
+							0 & 1 & \cdots & v'_{2n} \\
+							\vdots & \vdots & \ddots & \vdots \\
+							0 & 0 & \cdots & 1
+						\end{matrix}
+					\right| = (\prod_{i=1}^nv_{ii}) \left|
+						\begin{matrix}
+							1 & 0 & \cdots & 0 \\
+							0 & 1 & \cdots & 0 \\
+							\vdots & \vdots & \ddots & \vdots \\
+							0 & 0 & \cdots & 1
+						\end{matrix}
+					\right| = (\prod_{i=1}^nv_{ii})
+				\end{equation*}
+		\end{description}
+		\dab
+	\end{proof}
+\end{proposition}
+
+\section{Determinant of a 2x2 Matrix}
+\begin{proposition}
+	The determinant of a 2x2 matrix is:
+	\begin{equation*}
+		\left|
+			\begin{matrix}
+				a & b \\
+				c & d
+			\end{matrix}
+		\right| = ad-bc
+	\end{equation*}
+	\begin{proof}
+		Split the proof into three different cases:
+		\begin{description}
+			\item[Case 1:] Rows are linearly dependant
+				\begin{equation*}
+					\left|
+						\begin{matrix}
+							a & b \\
+							c & d
+						\end{matrix}
+					\right| = 0 = ad-bc
+				\end{equation*}
+			\item[Case 2:] $a\neq 0$ \\
+				\begin{equation*}
+					\left|
+						\begin{matrix}
+							a & b \\
+							c & d
+						\end{matrix}
+					\right| = a\left|
+						\begin{matrix}
+							1 & \frac{b}{a} \\
+							c & d
+						\end{matrix}
+					\right| = \left|
+						\begin{matrix}
+							1 & \frac{b}{a} \\
+							0 & d-c\frac{b}{a}
+						\end{matrix}
+					\right| = a(d-c\frac{b}{a})=ad-bc
+				\end{equation*}
+			\item[Case 3:] $a=0$ \\
+				\begin{equation*}
+					\left|
+						\begin{matrix}
+							0 & b \\
+							c & d
+						\end{matrix}
+					\right| = -\left|
+						\begin{matrix}
+							c & d \\
+							0 & b
+						\end{matrix}
+					\right| = -bc = ad-bc
+				\end{equation*}
+		\end{description}
+		\dab
+	\end{proof}
+\end{proposition}
+
+\section{Uniqueness of the Determinant Proof}
+Recall that the determinant is the unique function $f$ that is multilinear, alternating, and normalised. We shall now prove this.
+\begin{proof}
+	By induction on $n$, the size of the matrix.
+	\begin{description}
+		\item[$n=1$:] Trivial
+		\item[$n=2$:] Proven above
+		\item[$n=k+1$:] Assume for now $a_{11}\neq 0$
+			\begin{equation*}
+				\left|
+					\begin{matrix}
+						a_{11} & a_{12} & \dots & a_{1n} \\
+						a_{11} & a_{12} & \dots & a_{2n} \\
+						\vdots & \vdots & \ddots & \vdots \\
+						a_{11} & a_{12} & \dots & a_{nn} \\
+					\end{matrix}
+				\right| = a\left|
+					\begin{matrix}
+						1 & \frac{a_{12}}{a_{11}} & \dots & \frac{a_{1n}}{a_{11}} \\
+						a_{11} & a_{12} & \dots & a_{2n} \\
+						\vdots & \vdots & \ddots & \vdots \\
+						a_{11} & a_{12} & \dots & a_{nn} \\
+					\end{matrix}
+				\right| = a\left|
+					\begin{matrix}
+						1 & \frac{a_{12}}{a_{11}} & \dots & \frac{a_{1n}}{a_{11}} \\
+						0 & \dots & \dots & \dots \\
+						\vdots & \vdots & \text{stuff} & \vdots \\
+						0 &  & \dots &  \\
+					\end{matrix}
+				\right|
+			\end{equation*}
+			\begin{equation*}
+				= a\left(\left|
+					\begin{matrix}
+						1 & 0 & \dots & 0 \\
+						0 & \dots & \dots & \dots \\
+						\vdots & \vdots & \text{stuff} & \vdots \\
+						0 &  & \dots &  \\
+					\end{matrix}
+				\right| + \left|
+					\begin{matrix}
+						0 & \frac{a_{12}}{a_{11}} & \dots & \frac{a_{1n}}{a_{11}} \\
+						0 & \dots & \dots & \dots \\
+						\vdots & \vdots & \text{stuff} & \vdots \\
+						0 &  & \dots &  \\
+					\end{matrix}
+				\right|\right) = a\left|
+					\begin{matrix}
+						1 & 0 & \dots & 0 \\
+						0 & \dots & \dots & \dots \\
+						\vdots & \vdots & \text{stuff} & \vdots \\
+						0 &  & \dots &  \\
+					\end{matrix}
+				\right|
+			\end{equation*}
+		To be continued
+	\end{description}
+\end{proof}
+
+\end{document}
