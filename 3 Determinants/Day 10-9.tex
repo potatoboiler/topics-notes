@@ -276,16 +276,16 @@ Recall that the determinant is the unique function $f$ that is multilinear, alte
 				\left|
 					\begin{matrix}
 						a_{11} & a_{12} & \dots & a_{1n} \\
-						a_{11} & a_{12} & \dots & a_{2n} \\
+						a_{21} & a_{22} & \dots & a_{2n} \\
 						\vdots & \vdots & \ddots & \vdots \\
-						a_{11} & a_{12} & \dots & a_{nn} \\
+						a_{n1} & a_{n2} & \dots & a_{nn} \\
 					\end{matrix}
 				\right| = a\left|
 					\begin{matrix}
 						1 & \frac{a_{12}}{a_{11}} & \dots & \frac{a_{1n}}{a_{11}} \\
-						a_{11} & a_{12} & \dots & a_{2n} \\
+						a_{21} & a_{22} & \dots & a_{2n} \\
 						\vdots & \vdots & \ddots & \vdots \\
-						a_{11} & a_{12} & \dots & a_{nn} \\
+						a_{n1} & a_{n2} & \dots & a_{nn} \\
 					\end{matrix}
 				\right| = a\left|
 					\begin{matrix}
@@ -320,7 +320,29 @@ Recall that the determinant is the unique function $f$ that is multilinear, alte
 					\end{matrix}
 				\right|
 			\end{equation*}
-		To be continued
+		By induction, the minor matrix $A_{11}$ has a unique determinant, so $|A|=a_{11}|A_{11}|$ is also unique. \\
+		\\
+		Now assume $a_{11}=0$. \\
+		If the entire first column is 0, then by the big ugly lemma the rows are linearly dependant, which means the determinant must be 0, and is hence unique. \\
+		So assume $\exists a_{k1}\neq 0$. \\
+		\begin{equation*}
+			\left|
+				\begin{matrix}
+					a_{11} & a_{12} & \dots & a_{1n} \\
+					a_{21} & a_{22} & \dots & a_{2n} \\
+					\vdots & \vdots & \ddots & \vdots \\
+					a_{n1} & a_{n2} & \dots & a_{nn} \\
+				\end{matrix}
+			\right| =-\left|
+				\begin{matrix}
+					a_{k1} & a_{k2} & \dots & a_{kn} \\
+					a_{21} & a_{22} & \dots & a_{2n} \\
+					\vdots & \vdots & \ddots & \vdots \\
+					a_{n1} & a_{n2} & \dots & a_{nn} \\
+				\end{matrix}
+			\right| = -a_{k1}|A_{(k-1)1}|
+		\end{equation*}
+		Hence the determinant is unique. \dab
 	\end{description}
 \end{proof}
 
