@@ -216,7 +216,10 @@
 				\item[Normalisation:] Trivial.
 				\item[Alternating:] Let $\sigma$ be the permutation of swapping two rows. \\
 					$$\sum_{\pi\in S_n}(-1)^\pi\prod_{i=1}^na_{i(\pi\sigma)_i}=\sum_{\pi\in S_n}(-1)^{\pi\sigma}(-1)^\sigma\prod_{i=1}^na_{i(\pi\sigma)_i}=-\sum_{\pi'\in S_n}(-1)^{\pi'}\prod_{i=1}^na_{i\pi'_i}$$
-				\item[Multilinear:] Was not done in class for some reason (I assume he'll realise next class?), so it's left as an exercise for the reader.
+				\item[Multilinear:] Let $a_{k\pi_k}=\alpha b_{\pi_k}+\beta c_{\pi_k}$
+					$$\sum_{\pi\in S_n}(-1)^\pi\prod_{i=1}^na_{i\pi_i}=\sum_{\pi\in S_n}(-1)^\pi\left(\prod_{i=1}^{k-1}a_{i\pi_i}\right)a_{k\pi_k}\left(\prod_{i=k+1}^{n}a_{i\pi_i}\right)$$
+					$$=\sum_{\pi\in S_n}(-1)^\pi\left(\prod_{i=1}^{k-1}a_{i\pi_i}\right)(\alpha b_{\pi_k}+\beta c_{\pi_k})\left(\prod_{i=k+1}^{n}a_{i\pi_i}\right)$$
+					From here the proof is trivial. \dab
 			\end{description}
 		\end{description}
 	\end{proof}
