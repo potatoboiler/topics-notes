@@ -1,0 +1,158 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{subcaption, enumerate}
+\usepackage{bbold}
+\usepackage{polynom}
+\usepackage{xfrac}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{enumitem}
+
+\usepackage{tikz}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corot}{Corollary}[theorem]
+\newtheorem{lemma}{Lemma}
+\newtheorem{corol}{Corollary}[lemma]
+\newtheorem{proposition}{Proposition}
+\newtheorem{corop}{Corollary}[proposition]
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}[definition]
+\newtheorem*{notation}{Notation}
+
+\newcommand{\dab}
+{
+	\begin{tikzpicture}[scale=0.04]
+		% head
+		\draw[thick] (0, 0) circle (3cm);
+
+		% bent arm
+		\draw[thick, rotate around={15 : (0, 0)}] (-3, 0) -- (-3.7, -2) -- (4.1, -1.1);
+
+		% extended arm
+		\draw[thick, rotate=20] (3, 0) -- (7, 2);
+	\end{tikzpicture}
+}
+\newcommand{\st}{\text{ s.t. }}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\usepackage{fullpage}
+
+\title{Determinants Day 4 \\ with Dr Nevard}
+\author{Laura Gallo}
+\date{October 15, 2020}
+
+\begin{document}
+\maketitle
+
+\section{Determinant of Transpose Matrices}
+\begin{proposition}
+	$\det A=\det A^T$
+	\begin{proof}
+		We want to prove $\sum_{\sigma\in S_n}(-1)^\sigma\prod_{i=1}^na_{i\sigma_i}=\sum_{\sigma\in S_n}(-1)^\sigma\prod_{i=1}^na_{\sigma_ii}$
+		$$\prod_{i=1}^na_{i\sigma_i}=\prod_{\sigma_i=1}^na_{(\sigma^{-1}\sigma_i)\sigma_i}=\prod_{j=1}^na_{\sigma^{-1}_jj}=\prod_{j=1}^na_{\sigma_jj}$$
+		$$\therefore\sum_{\sigma\in S_n}(-1)^\sigma\prod_{i=1}^na_{i\sigma_i}=\sum_{\sigma\in S_n}(-1)^\sigma\prod_{i=1}^na_{\sigma_ii}$$
+		\dab
+	\end{proof}
+\end{proposition}
+
+\section{Permanent}
+\begin{definition}
+	The permanent of a matrix is defined using the formula below:
+	$$P(A)=\sum_{\sigma\in S_n}\prod_{i=1}^na_{i\sigma_i}$$
+	Interestingly, though the determinant of a matrix is calculated in $\mathcal{O}(n^3)$ time, the permanent of a matrix is calculated in exponential time.
+\end{definition}
+
+\section{Recursive Formula for the Determinant}
+\begin{equation*}
+	\det A =\det \left(
+		\begin{matrix}
+			a_{11} & a_{12} & \dots & a_{1n} \\
+			& & \text{stuff}
+		\end{matrix}
+	\right) = \sum_{i=1}^n a_{1i} \det \left(
+		\begin{matrix}
+			0 & \dots & 0 & 1 & 0 & \dots & 0 \\
+			& & & \text{stuff}
+		\end{matrix}
+	\right)
+\end{equation*}
+\begin{equation*}
+	= \sum_{i=1}^n a_{1i} \det \left(
+		\begin{matrix}
+			0 & \dots & 0 & 1 & 0 & \dots & 0 \\
+			& \text{stuff} & & 0 & & \text{stuff}
+		\end{matrix}
+	\right) = \sum_{i=1}^n a_{1i} (-1)^{i-1} \det \left(
+		\begin{matrix}
+			1 & 0 & \dots & 0 \\
+			0 & & \text{stuff}
+		\end{matrix}
+	\right)
+\end{equation*}
+$$=\sum_{i=1}^n a_{1i}(-1)^{i-1}\det A_{1i}$$
+where $A_{1i}$ is the $n-1$ by $n-1$ submatrix with the first row and the $i$th column removed. \\
+A more general formula is: \\
+$$\det A=\sum_{i=1}^n(-1)^{i+j}a_{ij}\det A_{ij}=\sum_{j=1}^n(-1)^{i+j}a_{ij}\det A_{ij}$$
+
+\subsection{Example: Determinant of a 3x3 Matrix}
+\begin{equation*}
+	\left|
+		\begin{matrix}
+			2 & 6 & 3 \\
+			1 & 9 & 4 \\
+			8 & 5 & 5
+		\end{matrix}
+	\right| =
+	2\left|
+		\begin{matrix}
+			9 & 4 \\
+			5 & 5
+		\end{matrix}
+	\right| - 6\left|
+		\begin{matrix}
+			1 & 4 \\
+			8 & 5
+		\end{matrix}
+	\right| + 3\left|
+		\begin{matrix}
+			1 & 9 \\
+			8 & 5
+		\end{matrix}
+	\right|
+	= 2(9\cdot5-4\cdot5)-6(1\cdot5-4\cdot8)+3(1\cdot5-9\cdot8)=11
+\end{equation*}
+
+\section{Inverses of Matrices}
+We have, by multilinearity:
+\begin{equation*}
+	\sum_{j=1}^n(-1)^{i+j}a_{kj}\det A_{ij}=
+	\begin{cases}
+		0 & \text{if $i\neq k$} \\
+		\det A & \text{if $i=k$} \\
+	\end{cases}
+\end{equation*}
+\\
+We can extend this further and say the following: \\
+Let $B=(b_{ij})$, where $b_{ij}=(-1)^{i+j}\det A_{ij}$. \\
+The $k$th row, $\ell$th column of $AB$ is:
+\begin{equation*}
+	(AB)_{k\ell}=\sum_{m=1}^na_{km}b_{m\ell}=\sum_{m=1}^na_{km}(-1)^{m+\ell}\det A_{\ell m}
+	=\begin{cases}
+		0 & \text{if $k\neq \ell$} \\
+		\det A & \text{if $k=\ell$} \\
+	\end{cases}
+\end{equation*}
+In other words, $AB=\det A \cdot I$, or $A^{-1}=\frac{B}{\det A}$.
+\end{document}
+

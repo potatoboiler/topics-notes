@@ -1,0 +1,228 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{subcaption, enumerate}
+\usepackage{bbold}
+\usepackage{polynom}
+\usepackage{xfrac}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{enumitem}
+
+\usepackage{tikz}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corot}{Corollary}[theorem]
+\newtheorem{lemma}{Lemma}
+\newtheorem{corol}{Corollary}[lemma]
+\newtheorem{proposition}{Proposition}
+\newtheorem{corop}{Corollary}[proposition]
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}[definition]
+\newtheorem*{notation}{Notation}
+
+\newcommand{\dab}
+{
+	\begin{tikzpicture}[scale=0.04]
+		% head
+		\draw[thick] (0, 0) circle (3cm);
+
+		% bent arm
+		\draw[thick, rotate around={15 : (0, 0)}] (-3, 0) -- (-3.7, -2) -- (4.1, -1.1);
+
+		% extended arm
+		\draw[thick, rotate=20] (3, 0) -- (7, 2);
+	\end{tikzpicture}
+}
+\newcommand{\st}{\text{ s.t. }}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\usepackage{fullpage}
+
+\title{Determinants Day 3 \\ with Dr Nevard}
+\author{Laura Gallo}
+\date{October 13, 2020}
+
+\begin{document}
+\maketitle
+
+\section{Two theorems}
+\begin{theorem}
+	If $A$, $B$ are matrices, then $|AB|=|A||B|$.
+	\begin{proof}
+		Split the proof into two cases.
+		\begin{description}
+			\item[Case 1:] $|B|=0$ \\
+				Then $B$ maps the domain into a smaller dimensional space, so $\text{dim Im}(AB)<\text{dim }AB$. \\
+				This means the product is singular, so $|AB|=0=|A||B|$.
+			\item[Case 2:] $|B|\neq 0$ \\
+				If $|A|=0$, then the above argument can be used. \\
+				Suppose $|A|\neq 0$. \\
+				Let $f(A)=\frac{|AB|}{|B|}$. We claim that $f$ is multilinear, alternating, and normalised (ie, is the determinant by uniqueness).
+				\begin{description}
+					\item[Normalised:] $f(I)=\frac{|IB|}{|B|}=\frac{|B|}{|B|}=1$
+					\item[Alternating] Swapping any two rows of $A$ is equivalent to swapping any two rows of $AB$ (left as an exercise to the reader). \\
+						$f(A_\text{swap})=\frac{|A_\text{swap}B|}{|B|}=\frac{|(AB)_\text{swap}|}{|B|}=-\frac{|AB|}{|B|}=-f(A)$
+					\item[Multilinear:] Let $v_1,\dots,av_k+bu_k,\dots,v_n$ be the rows of matrix $A$.
+						\begin{equation*}
+							f\left(
+								\begin{matrix}
+									v_1 \\
+									v_2 \\
+									\vdots \\
+									av_k+bu_k \\
+									\vdots \\
+									v_n
+								\end{matrix}
+							\right) = \frac{1}{|B|}\left|
+								\left(
+									\begin{matrix}
+										v_1 \\
+										v_2 \\
+										\vdots \\
+										av_k+bu_k \\
+										\vdots \\
+										v_n
+									\end{matrix}
+								\right)B
+							\right| = \frac{1}{|B|}\left|
+								a\left(
+									\begin{matrix}
+										v_1 \\
+										v_2 \\
+										\vdots \\
+										v_k \\
+										\vdots \\
+										v_n
+									\end{matrix}
+								\right)B+b\left(
+									\begin{matrix}
+										v_1 \\
+										v_2 \\
+										\vdots \\
+										u_k \\
+										\vdots \\
+										v_n
+									\end{matrix}
+								\right)B
+							\right|
+						\end{equation*}
+						\begin{equation*}
+							= \frac{a}{|B|}\left|
+								\left(
+									\begin{matrix}
+										v_1 \\
+										v_2 \\
+										\vdots \\
+										v_k \\
+										\vdots \\
+										v_n
+									\end{matrix}
+								\right)B
+							\right|+\frac{b}{|B|}\left|
+								\left(
+									\begin{matrix}
+										v_1 \\
+										v_2 \\
+										\vdots \\
+										u_k \\
+										\vdots \\
+										v_n
+									\end{matrix}
+								\right)B
+							\right| = af\left(
+								\begin{matrix}
+									v_1 \\
+									v_2 \\
+									\vdots \\
+									v_k \\
+									\vdots \\
+									v_n
+								\end{matrix}
+							\right) + bf\left(
+								\begin{matrix}
+									v_1 \\
+									v_2 \\
+									\vdots \\
+									u_k \\
+									\vdots \\
+									v_n
+								\end{matrix}
+							\right)
+						\end{equation*}
+			\end{description}
+		\end{description}
+		Therefore by uniqueness, $|AB|=|A||B|$. \dab
+	\end{proof}
+\end{theorem}
+
+\begin{theorem}
+	Every matrix has a determinant.
+
+	\begin{proof}
+		By induction.
+		\begin{description}
+			\item[$n=1$:] Trivial.
+			\item[$n=2$:] Already proven.
+			\item[$n=k+1$:] Recall that for a diagonal matrix \begin{math}
+				A=\left(
+					\begin{matrix}
+						a_{11} & 0 & \dots & 0 \\
+						0 & a_{22} & \dots & 0 \\
+						\vdots & \vdots & \ddots & \vdots \\
+						0 & 0 & \dots & a_{nn}
+					\end{matrix}
+				\right)
+			\end{math}, $|A|=\prod_{i=1}^na_{ii}$. \\
+			We can permute the rows of diagonal matrices and sum them up with one element not from the main diagonal. For example:
+			\begin{equation*}
+				\left|
+					\begin{matrix}
+						0 & 0 & a & 0 \\
+						b & 0 & 0 & 0 \\
+						0 & c & 0 & 0 \\
+						0 & 0 & 0 & d
+					\end{matrix}
+				\right| + \left|
+					\begin{matrix}
+						e & 0 & 0 & 0 \\
+						b & 0 & 0 & 0 \\
+						0 & c & 0 & 0 \\
+						0 & 0 & 0 & d
+					\end{matrix}
+				\right| = \left|
+					\begin{matrix}
+						e & 0 & a & 0 \\
+						b & 0 & 0 & 0 \\
+						0 & c & 0 & 0 \\
+						0 & 0 & 0 & d
+					\end{matrix}
+				\right|
+			\end{equation*}
+			From this, we claim that the determinant of a matrix is:
+			$$|A|=\sum_{\pi\in S_n}(-1)^\pi \prod_{i=1}^n a_{i\pi_i}$$
+			where $S_n$ is the group of permutations on a collection of $n$ items.
+
+			\begin{description}
+				\item[Normalisation:] Trivial.
+				\item[Alternating:] Let $\sigma$ be the permutation of swapping two rows. \\
+					$$\sum_{\pi\in S_n}(-1)^\pi\prod_{i=1}^na_{i(\pi\sigma)_i}=\sum_{\pi\in S_n}(-1)^{\pi\sigma}(-1)^\sigma\prod_{i=1}^na_{i(\pi\sigma)_i}=-\sum_{\pi'\in S_n}(-1)^{\pi'}\prod_{i=1}^na_{i\pi'_i}$$
+				\item[Multilinear:] Let $a_{k\pi_k}=\alpha b_{\pi_k}+\beta c_{\pi_k}$
+					$$\sum_{\pi\in S_n}(-1)^\pi\prod_{i=1}^na_{i\pi_i}=\sum_{\pi\in S_n}(-1)^\pi\left(\prod_{i=1}^{k-1}a_{i\pi_i}\right)a_{k\pi_k}\left(\prod_{i=k+1}^{n}a_{i\pi_i}\right)$$
+					$$=\sum_{\pi\in S_n}(-1)^\pi\left(\prod_{i=1}^{k-1}a_{i\pi_i}\right)(\alpha b_{\pi_k}+\beta c_{\pi_k})\left(\prod_{i=k+1}^{n}a_{i\pi_i}\right)$$
+					From here the proof is trivial. \dab
+			\end{description}
+		\end{description}
+	\end{proof}
+\end{theorem}
+
+\end{document}
